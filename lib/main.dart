@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'second_page/second_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,27 +32,29 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage> {
   String buttonName = 'Tap';
   int currentIndex = 0;
+  bool _isClicked = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('App Title'),
+        // backgroundColor: Colors,
       ),
       body: Center(
         child: currentIndex == 0
             ? Container(
                 width: double.infinity,
                 height: double.infinity,
-                color: Colors.red,
+                color: Colors.lightBlue,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.red,
-                          backgroundColor: Colors.orange),
+                          foregroundColor: Colors.lightBlue,
+                          backgroundColor: Colors.white),
                       onPressed: () {
                         setState(() {
                           buttonName = 'Tapped';
@@ -72,7 +75,17 @@ class _FirstPageState extends State<FirstPage> {
                   ],
                 ),
               )
-            : Image.asset('images/galaxy.jpg'),
+            : GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isClicked = !_isClicked;
+                  });
+                },
+                child: _isClicked
+                    ? Image.asset('images/galaxy.jpg')
+                    : Image.network(
+                        'https://media-cldnry.s-nbcnews.com/image/upload/newscms/2018_21/2443266/180524-milky-way-mn-1418.jpg'),
+              ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
@@ -92,17 +105,6 @@ class _FirstPageState extends State<FirstPage> {
           });
         },
       ),
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
     );
   }
 }
